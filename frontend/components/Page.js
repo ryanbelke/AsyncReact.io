@@ -15,7 +15,8 @@ const theme = {
   grey: "#3A3A3A",
   lightgrey: "#E1E1E1",
   offWhite: "#EDEDED",
-  maxWidth: "1200px"
+  maxWidth: "1200px",
+  boxShadow: "1px 5px 10px rgba(245,245,245 ,1)"
 };
 
 const StyledPage = styled.div`

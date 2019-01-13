@@ -51,7 +51,7 @@ const StyledHeader = styled.header`
     grid-template-columns: auto 1fr;
     justify-content: space-between;
     align-items: stretch;
-    box-shadow: 1px 5px 10px rgba(245,245,245 ,1);
+    box-shadow: ${props => props.theme.boxShadow};
     @media (max-width: 1300px) {
       grid-template-columns: 1fr;
       justify-content: center;

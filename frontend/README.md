@@ -7,3 +7,4 @@
 - setup env variables https://github.com/zeit/next.js/issues/3352 with babel-plugin-define
 - .gitignore
 - antD https://github.com/zeit/next.js/tree/master/examples/with-ant-design yarn add @zeit/next-css
+- setup SSL and twitter
