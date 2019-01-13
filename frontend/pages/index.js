@@ -1,5 +1,5 @@
 // index page for site front page
-import { Input, Icon, Button } from "antd";
+import { Input, Icon, Button, Spin } from "antd";
 import { Component } from "react";
 import axios from "axios";
 import moment from "moment";
@@ -14,13 +14,15 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tweets: null
+      tweets: null,
+      loading: false
     };
   }
   componentDidMount() {
     axios
       .get("https://localhost:3000/tweets")
-      .then(res => this.setState({ tweets: res.data }))
+      .then(this.setState({ loading: true }))
+      .then(res => this.setState({ tweets: res.data, loading: false }))
       .catch(err => console.warn(err));
   }
   render() {
@@ -120,7 +122,13 @@ class Home extends Component {
             </div>
           </div>
         </div>
-        <TweetContainer>{tweetNodes}</TweetContainer>
+        <small>tweets from @reactjs</small>
+        <TweetContainer loading={this.state.loading}>
+          {this.state.loading ? (
+            <Spin style={{ margin: "0 auto", marginTop: 40 }} />
+          ) : null}
+          {tweetNodes}
+        </TweetContainer>
       </>
     );
   }

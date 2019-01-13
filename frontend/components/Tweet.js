@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Tweet = styled.div`
   flex: 1 0 29%;
   margin: 0 10px 0 10px;
-  height: 350px;
+  height: 300px;
   position: relative;
   hr {
     margin: 0;

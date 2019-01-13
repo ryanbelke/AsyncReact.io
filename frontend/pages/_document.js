@@ -72,8 +72,9 @@ const Global = createGlobalStyle`
     line-height: 2;
     font-family: 'sans-serif';
     background: #ffffff;
-    padding-bottom: 60px;
+    padding-bottom: 40px;
   }
+  small { font-family: 'Nunito:sans'; color: rgba(0, 0, 0, 0.25); padding-left: 30px;
   a {
     text-decoration: none;
   }
