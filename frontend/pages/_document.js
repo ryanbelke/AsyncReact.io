@@ -74,7 +74,7 @@ const Global = createGlobalStyle`
     background: #ffffff;
     padding-bottom: 40px;
   }
-  small { font-family: 'Nunito:sans'; color: rgba(0, 0, 0, 0.25); padding-left: 30px;
+  small { font-family: 'Nunito:sans'; color: rgba(0,0,0,0.25); padding-left: 30px; }
   a {
     text-decoration: none;
   }
