@@ -29,7 +29,7 @@ class Home extends Component {
     tweets !== null && tweets.length
       ? (tweetNodes = tweets.slice(0, 3).map(tweet => (
           <Tweet key={tweet.id}>
-            <div>
+            <div className="top">
               <img
                 style={{ borderRadius: "50%", marginRight: 30 }}
                 src={tweet.user.profile_image_url_https}
@@ -45,7 +45,47 @@ class Home extends Component {
                 {moment().from(tweet.created_at, true)} ago
               </span>
             </div>
-            <span className="test">{tweet.text}</span>
+            <span className="text">
+              {tweet.full_text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "")}
+            </span>
+            <div>
+              <span className="image">
+                {tweet.entities.media ? (
+                  <a
+                    target="_blank"
+                    href={tweet.entities.media[0].media_url_https}
+                  >
+                    <img
+                      src={tweet.entities.media[0].media_url_https}
+                      width="350"
+                      height="150"
+                    />
+                  </a>
+                ) : null}
+              </span>
+            </div>
+            <div>
+              <span className="urls">
+                {tweet.entities.urls.length
+                  ? tweet.entities.urls.map(url => (
+                      <a key={url.url} href={`${url.url}`}>
+                        {url.url}
+                      </a>
+                    ))
+                  : null}
+              </span>
+            </div>
+            <div className="bottom">
+              <hr />
+              <small>
+                <a
+                  target="_blank"
+                  href={`https://twitter.com/statuses/${tweet.id_str}`}
+                >
+                  view original tweet
+                </a>
+              </small>
+            </div>
           </Tweet>
         )))
       : null;

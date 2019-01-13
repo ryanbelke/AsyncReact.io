@@ -72,6 +72,7 @@ const Global = createGlobalStyle`
     line-height: 2;
     font-family: 'sans-serif';
     background: #ffffff;
+    padding-bottom: 60px;
   }
   a {
     text-decoration: none;

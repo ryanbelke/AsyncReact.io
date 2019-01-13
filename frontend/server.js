@@ -64,7 +64,7 @@ axios
     }
   });
 
-var params = { screen_name: "reactjs" };
+var params = { screen_name: "reactjs", tweet_mode: "extended" };
 //pull based on query
 // var params = { q: "#reactjs" }
 //setup server

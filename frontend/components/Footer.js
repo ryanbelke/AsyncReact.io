@@ -5,9 +5,10 @@ const StyledFooter = styled.footer`
   bottom: 0;
   padding: 5px;
   display: flex;
-
+  height: 60px;
   width: 100%;
   left: 0;
+  z-index: -1;
   .bar-top {
     /* border-bottom: 1px solid ${props => props.theme.offwhite}; */
     display: flex;
