@@ -14,20 +14,20 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      response: null
+      tweets: null
     };
   }
   componentDidMount() {
     axios
       .get("https://localhost:3000/tweets")
-      .then(res => this.setState({ response: res.data }))
+      .then(res => this.setState({ tweets: res.data }))
       .catch(err => console.warn(err));
   }
   render() {
     let tweetNodes;
-    const { response } = this.state;
-    response !== null && response.statuses.length
-      ? (tweetNodes = response.statuses.slice(0, 3).map(tweet => (
+    const { tweets } = this.state;
+    tweets !== null && tweets.length
+      ? (tweetNodes = tweets.slice(0, 3).map(tweet => (
           <Tweet key={tweet.id}>
             <div>
               <img

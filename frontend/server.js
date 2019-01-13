@@ -64,7 +64,9 @@ axios
     }
   });
 
-var params = { q: "#react" };
+var params = { screen_name: "reactjs" };
+//pull based on query
+// var params = { q: "#reactjs" }
 //setup server
 app.prepare().then(() => {
   const server = express();
@@ -80,7 +82,11 @@ app.prepare().then(() => {
       bearer_token: bearer_token
     });
 
-    client.get("search/tweets", params, function(error, tweets, response) {
+    client.get("statuses/user_timeline", params, function(
+      error,
+      tweets,
+      response
+    ) {
       if (!error) {
         res.send(tweets);
         console.log(tweets);
