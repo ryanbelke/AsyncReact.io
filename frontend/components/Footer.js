@@ -8,7 +8,7 @@ const StyledFooter = styled.footer`
   height: 40px;
   width: 100%;
   left: 0;
-  z-index: -1;
+
   .bar-top {
     /* border-bottom: 1px solid ${props => props.theme.offwhite}; */
     display: flex;

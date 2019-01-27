@@ -1,22 +1,17 @@
-const express = require("express");
-const next = require("next");
-const axios = require("axios");
-const port = parseInt(process.env.PORT, 10) || 3000;
-const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev });
-const handle = app.getRequestHandler();
-const Twitter = require("twitter");
-
-const path = require("path");
-const fs = require("fs");
+var express = require("express");
+var next = require("next");
+var axios = require("axios");
+var port = parseInt(process.env.PORT, 10) || 3000;
+var dev = process.env.NODE_ENV !== "production";
+var app = next({ dev });
+var handle = app.getRequestHandler();
+var Twitter = require("twitter");
+var bodyParser = require("body-parser");
+var path = require("path");
+var fs = require("fs");
 
 var https = require("https");
 var querystring = require("querystring");
-
-var certOptions = {
-  key: fs.readFileSync(path.resolve("build/cert/server.key")),
-  cert: fs.readFileSync(path.resolve("build/cert/server.crt"))
-};
 
 //include credentials stored in .env
 if (process.env.NODE_ENV !== "production") {
@@ -31,25 +26,27 @@ var base64data = buff.toString("base64");
 console.log("key = " + process.env.AK);
 console.log("secret = " + process.env.AS);
 console.log("base64 = " + base64data);
+console.log("mail = " + process.env.MC);
 
 var bearer_token;
 
 const config = {
   headers: {
-    "Content-Type": "application/x-www-form-urlencoded",
-    Authorization: `Basic ${base64data}`
+    Authorization: `Basic ${base64data}`,
+    "Content-Type": "application/x-www-form-urlencoded"
   }
 };
-axios.defaults.headers.common["Authorization"] = `Basic ${base64data}`;
-axios.defaults.headers.post["Content-Type"] =
-  "application/x-www-form-urlencoded";
+// axios.defaults.headers.common["Authorization"] = `Basic ${base64data}`;
+// axios.defaults.headers.post["Content-Type"] =
+//   "application/x-www-form-urlencoded";
 //make request to get bearer_token and assign it
 axios
   .post(
     "https://api.twitter.com/oauth2/token",
     querystring.stringify({
       grant_type: "client_credentials"
-    })
+    }),
+    config
   )
   .then(res => (bearer_token = res.data.access_token))
 
@@ -70,7 +67,8 @@ var params = { screen_name: "reactjs", tweet_mode: "extended" };
 //setup server
 app.prepare().then(() => {
   const server = express();
-
+  //use bodyParser for request body
+  server.use(bodyParser.json());
   //GET /tweets
   // returns array of tweet objects based on param
   server.get("/tweets", (req, res) => {
@@ -88,12 +86,33 @@ app.prepare().then(() => {
       response
     ) {
       if (!error) {
+        console.log("found tweets");
         res.send(tweets);
-        console.log(tweets);
       } else {
         console.log(error);
       }
     });
+  });
+
+  const mailUrl = `https://us20.api.mailchimp.com/3.0/lists/520abc11d8/members/`;
+
+  server.post("/mail", (req, res) => {
+    const config = {
+      headers: {
+        Authorization: `api ${process.env.MC}`
+      }
+    };
+    console.log(req.body.email);
+    const data = {
+      email_address: req.body.email,
+      status: "subscribed",
+      merge_fields: { FNAME: "", LNAME: "" }
+    };
+
+    return axios
+      .post(mailUrl, data, config)
+      .then(res => res.send({ message: "Thank you for subscribing" }))
+      .catch(err => res.send({ message: "Error" }));
   });
 
   server.get("/", (req, res) => {
@@ -104,8 +123,21 @@ app.prepare().then(() => {
     return handle(req, res);
   });
 
-  https.createServer(certOptions, server).listen(port, err => {
-    if (err) throw err;
-    console.log(`> Ready on http://localhost:${port}`);
-  });
+  if (dev) {
+    //set SSL localhost cert
+    var certOptions = {
+      key: fs.readFileSync(path.resolve("build/cert/server.key")),
+      cert: fs.readFileSync(path.resolve("build/cert/server.crt"))
+    };
+
+    https.createServer(certOptions, server).listen(port, err => {
+      if (err) throw err;
+      console.log(`> Ready on http://localhost:${port}`);
+    });
+  } else {
+    server.listen(port || 3000, err => {
+      if (err) throw err;
+      console.log("> Ready on http://localhost:3000");
+    });
+  }
 });

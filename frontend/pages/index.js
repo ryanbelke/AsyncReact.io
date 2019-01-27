@@ -1,5 +1,5 @@
 // index page for site front page
-import { Input, Icon, Button, Spin } from "antd";
+import { Icon, Spin } from "antd";
 import { Component } from "react";
 import axios from "axios";
 import moment from "moment";
@@ -9,25 +9,34 @@ import H2 from "../components/styles/H2";
 import H3 from "../components/styles/H3";
 import Tweet from "../components/Tweet";
 import TweetContainer from "../components/TweetContainer";
+import SignupForm from "../components/SignupForm";
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       tweets: null,
-      loading: false
+      loading: false,
+      error: null,
+      message: ""
     };
   }
   componentDidMount() {
     axios
-      .get("https://localhost:3000/tweets")
+      .get(
+        process.env.NODE_ENV == "production"
+          ? "https://asyncreact.herokuapp.com/tweets"
+          : "https://localhost:3000/tweets"
+      )
       .then(this.setState({ loading: true }))
       .then(res => this.setState({ tweets: res.data, loading: false }))
-      .catch(err => console.warn(err));
+      .catch(err => this.setState({ error: err }));
   }
+
   render() {
     let tweetNodes;
     const { tweets } = this.state;
+
     tweets !== null && tweets.length
       ? (tweetNodes = tweets.slice(0, 3).map(tweet => (
           <Tweet key={tweet.id}>
@@ -108,27 +117,21 @@ class Home extends Component {
 
             <H3>coming soon</H3>
             <div>
-              <Input
-                style={{ width: 300 }}
-                prefix={
-                  <Icon type="user-add" style={{ color: "rgba(0,0,0,.25)" }} />
-                }
-                size="large"
-                placeholder="enter your email"
-              />
-              <Button style={{ width: 200 }} type="primary" size="large">
-                Keep me updated
-              </Button>
+              <SignupForm />
             </div>
           </div>
         </div>
-        <small>tweets from @reactjs</small>
-        <TweetContainer loading={this.state.loading}>
-          {this.state.loading ? (
-            <Spin style={{ margin: "0 auto", marginTop: 40 }} />
-          ) : null}
-          {tweetNodes}
-        </TweetContainer>
+        <>
+          <small style={{ marginTop: 50 }}>tweets from @reactjs</small>
+          <TweetContainer loading={this.state.loading}>
+            {this.state.error !== null ? this.state.error : null}
+            {this.state.loading ? (
+              <Spin style={{ margin: "0 auto", marginTop: 40 }} />
+            ) : (
+              <>{tweetNodes}</>
+            )}
+          </TweetContainer>
+        </>
       </>
     );
   }

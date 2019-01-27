@@ -10,7 +10,7 @@ const H2 = styled.h2`
 
   display: block;
   @media (max-width: 1200px) {
-    font-size: 1.5em;
+    font-size: 1.25em;
   }
 `;
 export default H2;

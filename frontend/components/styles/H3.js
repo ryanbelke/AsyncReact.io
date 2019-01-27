@@ -9,5 +9,8 @@ const H3 = styled.h3`
   padding-left: 4px;
   font-size: 1.5em;
   font-style: italic;
+  @media (max-width: 1200px) {
+    font-size: 1em;
+  }
 `;
 export default H3;
