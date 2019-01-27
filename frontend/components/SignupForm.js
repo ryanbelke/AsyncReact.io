@@ -102,7 +102,7 @@ class SignupForm extends Component {
               size="large"
               disabled={this.state.error}
             >
-              Keep me updated
+              to stay updated
             </Button>
           </Form.Item>
         </Form>

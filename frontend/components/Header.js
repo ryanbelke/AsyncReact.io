@@ -44,6 +44,7 @@ const Nav = styled.span`
   small {
     font-family: "Nunito:sans";
     color: ${props => props.theme.blue3};
+    padding: 0;
   }
   .ant-menu-item a :after {
     border-right: 1px solid #e8e8e8;
@@ -75,7 +76,7 @@ const Header = () => (
 
     <Nav>
       <Menu style={{ borderBottom: "none" }} mode="horizontal">
-        <Menu.Item>
+        <Menu.Item style={{ width: 130 }}>
           <small>coming soon</small>
         </Menu.Item>
         <Menu.Item disabled>
