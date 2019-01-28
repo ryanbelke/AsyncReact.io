@@ -13,6 +13,7 @@ export const Logo = styled.h1`
   margin-top: 10px;
   display: inline-block;
   order: 1;
+  z-index: 1;
   a {
     font-family: "Black Han Sans", sans-serif;
     padding: 0.5rem 1rem;

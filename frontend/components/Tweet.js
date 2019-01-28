@@ -32,5 +32,15 @@ const Tweet = styled.div`
     bottom: 0;
     height: 30px;
   }
+  .profile-image {
+    border-radius: 50%;
+    margin-right: 30px;
+  }
+  @media (max-width: 1200px) {
+    .profile-image {
+      width: 30px;
+      margin-right: 5px;
+    }
+  }
 `;
 export default Tweet;

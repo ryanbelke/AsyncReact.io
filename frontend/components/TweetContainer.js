@@ -8,14 +8,16 @@ const TweetContainer = styled.div`
   flex-direction: row;
   margin-top: 60px;
   margin-bottom: 60px;
-  padding: 15px;
+  padding: 35px;
+  position: relative;
+  background: ${props =>
+    props.loading ? "rgba(0, 0, 0, 0.01)" : props.theme.grey1};
+  border-radius: 1%;
 
-  background: ${props => (props.loading ? "rgba(0, 0, 0, 0.01)" : "#ffffff")};
-  border-radius: 4px;
-
-  height: 360px;
+  height: 380px;
   @media (max-width: 1200px) {
     height: auto;
+    padding: 15px;
   }
 `;
 export default TweetContainer;

@@ -10,6 +10,7 @@ import H3 from "../components/styles/H3";
 import Tweet from "../components/Tweet";
 import TweetContainer from "../components/TweetContainer";
 import SignupForm from "../components/SignupForm";
+import Angles from "../components/Angles";
 
 class Home extends Component {
   constructor(props) {
@@ -42,7 +43,7 @@ class Home extends Component {
           <Tweet key={tweet.id}>
             <div className="top">
               <img
-                style={{ borderRadius: "50%", marginRight: 30 }}
+                className="profile-image"
                 src={tweet.user.profile_image_url_https}
               />
               {tweet.verified ? (
@@ -68,7 +69,7 @@ class Home extends Component {
                   >
                     <img
                       src={tweet.entities.media[0].media_url_https}
-                      width="350"
+                      width="100%"
                       height="150"
                     />
                   </a>
@@ -102,11 +103,14 @@ class Home extends Component {
       : null;
     return (
       <>
-        <div className="border-box">
+        <div className="border-box" style={{ position: "relative " }}>
           <style jsx>
             {`
               span {
                 font-weight: bold;
+              }
+              .border-box {
+                border-radius: 5%;
               }
             `}
           </style>
@@ -122,7 +126,9 @@ class Home extends Component {
           </div>
         </div>
         <>
-          <small style={{ marginTop: 50 }}>tweets from @reactjs</small>
+          <small style={{ top: 50, color: "gray", position: "relative" }}>
+            tweets from @reactjs
+          </small>
           <TweetContainer loading={this.state.loading}>
             {this.state.error !== null ? this.state.error : null}
             {this.state.loading ? (

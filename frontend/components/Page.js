@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 import Header from "./Header";
 import Meta from "./Meta";
+import Angles from "../components/Angles";
 
 const theme = {
   titleFont: 'Black Han Sans", sans-serif',
@@ -13,6 +14,9 @@ const theme = {
   grey3: "#f5f5f5",
   black: "#393939",
   grey: "#3A3A3A",
+  angleLight: "rgba(250, 250, 250, 1)",
+  greyGradient:
+    "linear-gradient(150deg, #ffffff 15%, #eeeeee 90%, #f5f5f5 94%)",
   lightgrey: "#E1E1E1",
   offWhite: "#EDEDED",
   maxWidth: "1100px",
@@ -70,7 +74,7 @@ const Global = createGlobalStyle`
     font-family: 'Nunito:sans-extra-bold';
     src: url('/static/nunitosans-extrabold-webfont.woff2') format("woff2");
   }
-
+  
   html {
     box-sizing: border-box;
     font-size: 10px;
@@ -103,12 +107,18 @@ const Global = createGlobalStyle`
     font-family: 'sans-serif';
     background: #ffffff;
     padding-bottom: 40px;
-  }
+    z-index: 1;
+  } 
+  
   small { font-family: 'Nunito:sans'; color: rgba(0,0,0,0.25); padding-left: 30px; }
   a {
     text-decoration: none;
   }
   button {  font-family: 'Nunito:sans'; }
+
+  @media (max-width: 1200px) {
+    padding: 5px;
+  }
 `;
 
 class Page extends Component {
@@ -120,6 +130,8 @@ class Page extends Component {
           <StyledPage>
             <Meta />
             <Header />
+            <Angles top={"350px"} />
+
             <Inner>{this.props.children}</Inner>
           </StyledPage>
         </ThemeProvider>

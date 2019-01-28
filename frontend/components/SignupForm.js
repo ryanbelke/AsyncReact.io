@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Input, Icon, Button, Spin, Form } from "antd";
 import axios from "axios";
 
-class SignupForm extends Component {
+class SignupForm extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -101,6 +101,7 @@ class SignupForm extends Component {
               type="primary"
               size="large"
               disabled={this.state.error}
+              style={{ color: this.state.error ? "gray" : "" }}
             >
               to stay updated
             </Button>
